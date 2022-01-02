@@ -66,4 +66,21 @@ void Date::output()
 	cout << Day << "/" << Month << "/" << Year;
 }
 
-
+void Student::input()
+{
+	cout << "First name: "; fflush(stdin); getline(cin, First_Name);
+	cout << "Last name: "; fflush(stdin); getline(cin, Last_Name);
+	cout << endl;
+	cout << "Student ID: "; fflush(stdin); getline(cin, Id_Code);
+	cout << "Date of Birth"; Date_Of_Birth.input();
+	// adding date
+	cout << endl;
+	cout << "Linear Algebra grade: "; cin >> Linear_Algebra_Grade;
+	cout << "Calculus grade: "; cin >> Calculus_Grade;
+	cout << "Data Struct grade: "; cin >> DataStruct_Grade;
+	Avg_Grade = (Linear_Algebra_Grade + Calculus_Grade + DataStruct_Grade) / 3;
+}
+void Student::output_all()
+{
+	cout << "|"<< left << setw(15) << First_Name << setw(10) << Last_Name << "|" << left << setw(8) << Id_Code << "|" << left << setw(8) << Linear_Algebra_Grade << left << setw(8) << Calculus_Grade << left << setw(8) << DataStruct_Grade << left << setw(8) << Avg_Grade << endl;
+}

@@ -17,29 +17,28 @@ class Student
 	string Last_Name;
 
 	string Id_Code;
-	int Numerical_Order;
-	Date BirthDay;
+	Date Date_Of_Birth;
+	Date Adding_Date;
+
 	float Linear_Algebra_Grade;
 	float DataStruct_Grade;
-	float DataBase_Grade;
+	float Calculus_Grade;
 	float Avg_Grade;
 
 public:
 	void input();
-	void output();
+	void output_all();
+	void output_in4();
+	void output_grade();
 };
-
 class List
 {
-	struct Nodes
-	{
-		Student St;
-		Student* Next;
-	};
+	Student* Head;
+	int Numb_Of_Student;
 public:
+	List(): Head(nullptr), Numb_Of_Student(0) {}
 	void add(Student A);
 	void del(string Id);
 	void search_by_name(string Name);
 	void save();
 };
-
