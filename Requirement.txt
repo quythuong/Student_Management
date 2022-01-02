@@ -1,0 +1,7 @@
+- Print student list
+- Add
+- Delete
+- Search
+- Sort
+- Statistic
+- Save
