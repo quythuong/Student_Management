@@ -5,14 +5,16 @@ class Date
 	int Day, Month, Year;
 public:
 	Date(int day, int month, int year): Day(day), Month(month), Year(year) {}
-	void setDate(int day, int month, int year);
+	bool is_LeapYear();
+	bool checkDate();
 	void input();
 	void output();
 };
 
 class Student
 {
-	string Name;
+	string First_Name;
+	string Last_Name;
 
 	string Id_Code;
 	int Numerical_Order;
@@ -35,5 +37,9 @@ class List
 		Student* Next;
 	};
 public:
+	void add(Student A);
+	void del(string Id);
+	void search_by_name(string Name);
+	void save();
 };
 
