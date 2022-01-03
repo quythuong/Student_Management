@@ -2,7 +2,7 @@
 #include<iomanip>
 #include"student.h"
 
-
+//=============================================================Date class definition=============================================================
 bool Date::is_LeapYear()
 {
 	if(Year % 4 == 0 && Year % 100 != 0)
@@ -65,7 +65,19 @@ void Date::output()
 {
 	cout << Day << "/" << Month << "/" << Year;
 }
-
+//=============================================================Student class definition=============================================================
+Student::Student()
+{
+	First_Name = "";
+	Last_Name = "";
+	Id_Code = "N/A";
+	Date_Of_Birth = Date(1, 1, 1900);
+	Adding_Date = Date(1, 1, 1900);
+	Linear_Algebra_Grade = -1;
+	DataStruct_Grade = -1;
+	Calculus_Grade = -1;
+	Avg_Grade = -1;
+}
 void Student::input()
 {
 	cout << "First name: "; fflush(stdin); getline(cin, First_Name);
@@ -82,5 +94,25 @@ void Student::input()
 }
 void Student::output_all()
 {
-	cout << "|"<< left << setw(15) << First_Name << setw(10) << Last_Name << "|" << left << setw(8) << Id_Code << "|" << left << setw(8) << Linear_Algebra_Grade << left << setw(8) << Calculus_Grade << left << setw(8) << DataStruct_Grade << left << setw(8) << Avg_Grade << endl;
+	cout << "|"<< left << setw(15) << First_Name << setw(10) << Last_Name << "|" << left << setw(8) << Id_Code << "|"
+	<< left << setw(8) << Linear_Algebra_Grade << "|" << left << setw(8) << Calculus_Grade << "|" << left << setw(8) << DataStruct_Grade << "|"
+	<< left << setw(8) << Avg_Grade << endl;
+}
+void Student::output_in4()
+{
+	cout << "|"<< left << setw(15) << First_Name << setw(10) << Last_Name << "|" << left << setw(8) << Id_Code << "|" << endl;
+}
+void Student::output_grade()
+{
+	cout << "|"<< left << setw(15) << First_Name << setw(10) << Last_Name << "|" 
+	<< left << setw(8) << Linear_Algebra_Grade << "|" << left << setw(8) << Calculus_Grade << "|" << left << setw(8) << DataStruct_Grade << "|"
+	<< left << setw(8) << Avg_Grade << endl;
+}
+//=============================================================Student class definition=============================================================
+void List::add(Student A)
+{
+	if(Head == nullptr)
+	{
+		Head = new Student(A);
+	}
 }
