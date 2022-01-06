@@ -109,10 +109,31 @@ void Student::output_grade()
 	<< left << setw(8) << Avg_Grade << endl;
 }
 //=============================================================Student class definition=============================================================
+
+//realloc definition
+void reallocate(Student *&St, int new_memory_area, int old_memory_area)
+{
+	Student *temp = new Student[old_memory_area];
+
+	for(int i = 0; i < old_memory_area; i++)
+		temp[i] = St[i];
+	delete[] St;
+
+	St = new Student[new_memory_area];
+	for(int i = 0; i < old_memory_area; i++)
+		St[i] = temp[i];
+	delete[] temp;
+}
 void List::add(Student A)
 {
 	if(Head == nullptr)
 	{
 		Head = new Student(A);
 	}
+	else
+	{
+		reallocate(Head, Numb_Of_Student + 1, Numb_Of_Student);
+		Numb_Of_Student++;
+		Head[Numb_Of_Student - 1] = A;
+	}	
 }

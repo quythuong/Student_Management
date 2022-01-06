@@ -47,5 +47,5 @@ public:
 	void save();
 	~List();
 };
-
+void reallocate(Student *&St, int new_memory_area, int old_memory_area);
 
