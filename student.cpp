@@ -57,7 +57,7 @@ void Date::input()
 	cout << "Day/Month/Year(separate by space): "; cin >> Day >> Month >> Year;
 	while(!checkDate())
 	{
-		cout << "Wrong date! Please try again!";
+		cout << "Wrong date! Please try again!\n";
 		cout << "Day/Month/Year(separate by space): "; cin >> Day >> Month >> Year;
 	}
 }
@@ -78,38 +78,53 @@ Student::Student()
 	Calculus_Grade = -1;
 	Avg_Grade = -1;
 }
-void Student::input()
+void Student::set_FirstName(string First_Name)
 {
-	cout << "First name: "; fflush(stdin); getline(cin, First_Name);
-	cout << "Last name: "; fflush(stdin); getline(cin, Last_Name);
-	cout << endl;
-	cout << "Student ID: "; fflush(stdin); getline(cin, Id_Code);
-	cout << "Date of Birth"; Date_Of_Birth.input();
-	// adding date
-	cout << endl;
-	cout << "Linear Algebra grade: "; cin >> Linear_Algebra_Grade;
-	cout << "Calculus grade: "; cin >> Calculus_Grade;
-	cout << "Data Struct grade: "; cin >> DataStruct_Grade;
-	Avg_Grade = (Linear_Algebra_Grade + Calculus_Grade + DataStruct_Grade) / 3;
+	this->First_Name = First_Name;
 }
-void Student::output_all()
+void Student::set_LastName(string Last_Name)
 {
-	cout << "|"<< left << setw(15) << First_Name << setw(10) << Last_Name << "|" << left << setw(8) << Id_Code << "|"
-	<< left << setw(8) << Linear_Algebra_Grade << "|" << left << setw(8) << Calculus_Grade << "|" << left << setw(8) << DataStruct_Grade << "|"
-	<< left << setw(8) << Avg_Grade << endl;
+	this->Last_Name = Last_Name;
 }
-void Student::output_in4()
+void Student::set_Gender(bool Gender)
 {
-	cout << "|"<< left << setw(15) << First_Name << setw(10) << Last_Name << "|" << left << setw(8) << Id_Code << "|" << endl;
+	this->Gender = Gender;
 }
-void Student::output_grade()
+void Student::set_Id(string Id)
 {
-	cout << "|"<< left << setw(15) << First_Name << setw(10) << Last_Name << "|" 
-	<< left << setw(8) << Linear_Algebra_Grade << "|" << left << setw(8) << Calculus_Grade << "|" << left << setw(8) << DataStruct_Grade << "|"
-	<< left << setw(8) << Avg_Grade << endl;
+	this->Id_Code = Id;
 }
-//=============================================================Student class definition=============================================================
+void Student::set_DateOfBirth(Date Date_Of_Birth)
+{
+	this->Date_Of_Birth = Date_Of_Birth;
+}
+void Student::set_Adding_Date(Date Adding_Date)
+{
+	this->Adding_Date = Adding_Date;
+}
+void Student::set_LA_Grade_Date(float Linear_Algebra_Grade)
+{
+	this->Linear_Algebra_Grade = Linear_Algebra_Grade;
+}
+void Student::set_Calculus_Grade(float Calculus_Grade)
+{
+	this->Calculus_Grade = Calculus_Grade;
+}
+void Student::set_DS_Grade(float DataStruct_Grade)
+{
+	this->DataStruct_Grade = DataStruct_Grade;
+}
+string Student::get_FirstName() { return First_Name; }
+string Student::get_LastName() { return Last_Name; }
+bool Student::get_Gender() { return Gender; }
+string Student::get_Id() { return Id_Code; }
+Date Student::get_DateOfBirth() { return Date_Of_Birth; }
+Date Student::get_Adding_Date() { return Adding_Date; }
+float Student::get_LA_Grade() { return Linear_Algebra_Grade; }
+float Student::get_DS_Grade() { return DataStruct_Grade; }
+float Student::get_Calculus_Grade() { return Calculus_Grade; }
 
+//=============================================================List class definition=============================================================
 //realloc definition
 void reallocate(Student *&St, int new_memory_area, int old_memory_area)
 {
@@ -124,16 +139,41 @@ void reallocate(Student *&St, int new_memory_area, int old_memory_area)
 		St[i] = temp[i];
 	delete[] temp;
 }
-void List::add(Student A)
+void List::add(Student A[], int n)
 {
-	if(Head == nullptr)
+	if(Head == nullptr) // if the List is empty
 	{
-		Head = new Student(A);
+		Head = new Student[n];
+		for(int i = 0; i < n; i++)
+			Head[i] = A[i];
+		Numb_Of_Student = n;
 	}
 	else
 	{
-		reallocate(Head, Numb_Of_Student + 1, Numb_Of_Student);
-		Numb_Of_Student++;
-		Head[Numb_Of_Student - 1] = A;
-	}	
+		reallocate(Head, Numb_Of_Student + n, Numb_Of_Student);
+		for(int i = 0; i < n; i++)
+			Head[Numb_Of_Student + i] = A[i];
+		Numb_Of_Student += n;
+	}
 }
+void List::del_by_Id(string Id)
+{
+	if(Head == nullptr)
+	{
+		cout << "The List is empty";
+	}
+	else
+	{
+		for(int i = 0; i < Numb_Of_Student; i++)
+			if(Head[i].get_Id() == Id)
+			{
+				for(int k = i; k < Numb_Of_Student - 1; k++)
+					Head[k] = Head[k + 1];
+				reallocate(Head, Numb_Of_Student - 1, Numb_Of_Student);
+				Numb_Of_Student--;
+			}
+		if(Numb_Of_Student == 0)
+			Head = nullptr;
+	}
+}
+
