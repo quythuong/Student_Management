@@ -1,5 +1,12 @@
+#ifndef STUDENT_H
+#define STUDENT_H
+
+#include<iostream>
 #include<string>
+#include<iomanip>
+
 using namespace std;
+
 class Date
 {
 	int Day, Month, Year;
@@ -8,8 +15,14 @@ public:
 	Date(int day, int month, int year): Day(day), Month(month), Year(year) {}
 	bool is_LeapYear();
 	bool checkDate();
-	void input();
-	void output();
+
+	void set_Day(int Day);
+	void set_Month(int Month);
+	void set_Year(int Year);
+
+	int get_Day();
+	int get_Month();
+	int get_Year();
 };
 
 class Student
@@ -67,4 +80,4 @@ public:
 	~List();
 };
 void reallocate(Student *&St, int new_memory_area, int old_memory_area);
-
+#endif
