@@ -75,7 +75,10 @@ public:
 	void add(Student A[], int n);
 	void del_by_Id(string Id);
 	void search_by_name(string Name);
+
 	int get_Numb_Of_Student();
+	Student* get_Head();
+
 	void save();
 	~List();
 };

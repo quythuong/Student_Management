@@ -154,6 +154,9 @@ void List::del_by_Id(string Id)
 			Head = nullptr;
 	}
 }
+
+int List::get_Numb_Of_Student() { return this->Numb_Of_Student; }
+Student* List::get_Head() { return this->Head; }
 List::~List()
 {
 	delete[] Head;
