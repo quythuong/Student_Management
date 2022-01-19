@@ -35,8 +35,9 @@ int main() {
 			break;
 		else if(Choice == 3)
 			print_List();
-
-		_getch();
+		
+		cout << "\n";
+		system("pause");
 	}
 	return 0;
 }
@@ -48,13 +49,14 @@ void add_Student()
 	Student *Temp;
 	cout << "\nType quantity: "; cin >> Q;
 	Temp = new Student[Q];
+	cout << "\n=================================================================\n";
 	for(int i = 0 ; i < Q; i++)
 	{
 		string tstr;
-		cout << "First Name: "; fflush(stdin); getline(cin, tstr); Temp->set_FirstName(tstr);
-		cout << "Last Name: "; fflush(stdin); cin >> tstr; Temp->set_LastName(tstr);
-		cout << "Gender: "; fflush(stdin); cin >> tstr; Temp->set_Gender(((tstr == "male")? 1 : 0));
-		cout << "ID code: "; fflush(stdin); cin >> tstr; Temp->set_Id(tstr);
+		cout << "First Name: "; fflush(stdin); getline(cin, tstr); Temp[i].set_FirstName(tstr);
+		cout << "Last Name: "; fflush(stdin); cin >> tstr; Temp[i].set_LastName(tstr);
+		cout << "Gender: "; fflush(stdin); cin >> tstr; Temp[i].set_Gender(((tstr == "male")? 1 : 0));
+		cout << "ID code: "; fflush(stdin); cin >> tstr; Temp[i].set_Id(tstr);
 		
 		Date temp_Date;
 		int D, M, Y;
@@ -65,7 +67,7 @@ void add_Student()
 			temp_Date.set_Month(M);
 			temp_Date.set_Year(Y);
 		} while(!temp_Date.checkDate());
-		Temp->set_DateOfBirth(temp_Date);
+		Temp[i].set_DateOfBirth(temp_Date);
 
 		//get the current date
 		time_t t = time(0); // get time now
@@ -73,7 +75,9 @@ void add_Student()
 		temp_Date.set_Day(now->tm_mday);
 		temp_Date.set_Month(now->tm_mon);
 		temp_Date.set_Year(now->tm_year);
-		Temp->set_Adding_Date(temp_Date);
+		Temp[i].set_Adding_Date(temp_Date);
+
+		cout << "=================================================================\n";
 	}
 
 	L.add(Temp, Q);
@@ -86,12 +90,13 @@ void print_List()
 	cout << "\n|" << setw(15) << left << "First name " << "|" << setw(10) << left << "Last name " << "|"
 		<< setw(7) << left << "Gender " << "|" << setw(11) << left << "Birthday " << "|" << endl;
 	cout << "+" << "---------------" << "+" << "----------" << "+" << "-------" << "+" << "-----------" << "+" << endl;
-	
+	Student* Temp = L.get_Head();
 	for(int i = 0; i < n; i++)
 	{
-		cout << "|" << setw(15) << left << L.get_Head()->get_FirstName()<< "|" << setw(10) << left << L.get_Head()->get_LastName() << "|"
-			<< setw(7) << left << L.get_Head()->get_Gender() << "|" << L.get_Head()->get_DateOfBirth().get_Year() 
-			<< "/" << L.get_Head()->get_DateOfBirth().get_Month() << "/" << setw(4) << left << L.get_Head()->get_DateOfBirth().get_Day() << "|" << endl;
+		cout << "|" << setw(15) << left << Temp[i].get_FirstName()<< "|" << setw(10) << left << Temp[i].get_LastName() << "|"
+			<< setw(7) << left << Temp[i].get_Gender() << "|" << Temp[i].get_DateOfBirth().get_Year() 
+			<< "/" << Temp[i].get_DateOfBirth().get_Month() << "/" << setw(4) << left << Temp[i].get_DateOfBirth().get_Day() << "|" << endl;
 	}
+	delete[] Temp;
 }
 //void del_Student();
