@@ -1,4 +1,5 @@
 #include<iostream>
+#include<math.h>
 #include<string>
 #include<iomanip>
 #include"student.h"
@@ -89,7 +90,7 @@ void Student::set_Gender(bool Gender) { this->Gender = Gender; }
 void Student::set_Id(string Id) { this->Id_Code = Id; }
 void Student::set_DateOfBirth(Date Date_Of_Birth) { this->Date_Of_Birth = Date_Of_Birth; }
 void Student::set_Adding_Date(Date Adding_Date) { this->Adding_Date = Adding_Date; }
-void Student::set_LA_Grade_Date(float Linear_Algebra_Grade) { this->Linear_Algebra_Grade = Linear_Algebra_Grade; }
+void Student::set_LA_Grade(float Linear_Algebra_Grade) { this->Linear_Algebra_Grade = Linear_Algebra_Grade; }
 void Student::set_Calculus_Grade(float Calculus_Grade) { this->Calculus_Grade = Calculus_Grade; }
 void Student::set_DS_Grade(float DataStruct_Grade) { this->DataStruct_Grade = DataStruct_Grade; }
 string Student::get_FirstName() { return First_Name; }
@@ -103,20 +104,6 @@ float Student::get_DS_Grade() { return DataStruct_Grade; }
 float Student::get_Calculus_Grade() { return Calculus_Grade; }
 
 //=============================================================List class definition=============================================================
-//realloc definition
-void reallocate(Student *&St, int new_memory_area, int old_memory_area)
-{
-	Student *temp = new Student[old_memory_area];
-
-	for(int i = 0; i < old_memory_area; i++)
-		temp[i] = St[i];
-	delete[] St;
-
-	St = new Student[new_memory_area];
-	for(int i = 0; i < old_memory_area; i++)
-		St[i] = temp[i];
-	delete[] temp;
-}
 void List::add(Student A[], int n)
 {
 	if(Head == nullptr) // if the List is empty
@@ -160,5 +147,19 @@ Student* List::get_Head() { return this->Head; }
 List::~List()
 {
 	delete[] Head;
+}
+//=============================================================Other definitions=============================================================
+void reallocate(Student *&St, int new_memory_area, int old_memory_area)
+{
+	Student *temp = new Student[old_memory_area];
+
+	for(int i = 0; i < old_memory_area; i++)
+		temp[i] = St[i];
+	delete[] St;
+
+	St = new Student[new_memory_area];
+	for(int i = 0; i < old_memory_area; i++)
+		St[i] = temp[i];
+	delete[] temp;
 }
 

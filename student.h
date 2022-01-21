@@ -51,7 +51,7 @@ public:
 	void set_Id(string Id);
 	void set_DateOfBirth(Date Date_Of_Birth);
 	void set_Adding_Date(Date Adding_Date);
-	void set_LA_Grade_Date(float Linear_Algebra_Grade);
+	void set_LA_Grade(float Linear_Algebra_Grade);
 	void set_DS_Grade(float DataStruct_Grade);
 	void set_Calculus_Grade(float Calculus_Grade);
 
@@ -82,5 +82,7 @@ public:
 	void save();
 	~List();
 };
+
+// other functions
 void reallocate(Student *&St, int new_memory_area, int old_memory_area);
 #endif
