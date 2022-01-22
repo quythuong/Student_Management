@@ -200,7 +200,7 @@ void read_file()
 	}
 
 	L.add(Temp_St, Q);
-	
+	delete[] Temp_St;
 	Student_Data_FileIn.close();
 }
 
@@ -211,14 +211,13 @@ void print_List()
 	cout << "\n|" << setw(15) << left << "First name " << "|" << setw(10) << left << "Last name " << "|"
 		<< setw(7) << left << "Gender " << "|" << setw(11) << left << "Birthday " << "|" << endl;
 	cout << "+" << "---------------" << "+" << "----------" << "+" << "-------" << "+" << "-----------" << "+" << endl;
-	Student* Temp_St = L.get_Head();
 	for(int i = 0; i < q; i++)
 	{
-		cout << "|" << setw(15) << left << Temp_St[i].get_FirstName()<< "|" << setw(10) << left << Temp_St[i].get_LastName() << "|"
-			<< setw(7) << left << Temp_St[i].get_Gender() << "|" << Temp_St[i].get_DateOfBirth().get_Year() 
+		cout << "|" << setw(15) << left << L.get_Head()[i].get_FirstName()<< "|" << setw(10) << left << L.get_Head()[i].get_LastName() << "|"
+			<< setw(7) << left << L.get_Head()[i].get_Gender() << "|" << L.get_Head()[i].get_DateOfBirth().get_Year() 
 			<< "/";
-		int M = Temp_St[i].get_DateOfBirth().get_Month(); 
-		int D = Temp_St[i].get_DateOfBirth().get_Day();
+		int M = L.get_Head()[i].get_DateOfBirth().get_Month(); 
+		int D = L.get_Head()[i].get_DateOfBirth().get_Day();
 		if(M < 10 && D < 10)
 			cout << 0 << M << "/" << 0 << setw(2) << left << D << "|" << endl;
 		else if(M >= 10 && D < 10)
@@ -228,6 +227,5 @@ void print_List()
 		else
 			cout << M << "/" << setw(3) << left << D << "|" << endl;
 	}
-	delete[] Temp_St;
 }
 //void del_Student();

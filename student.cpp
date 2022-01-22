@@ -104,21 +104,23 @@ float Student::get_DS_Grade() { return DataStruct_Grade; }
 float Student::get_Calculus_Grade() { return Calculus_Grade; }
 
 //=============================================================List class definition=============================================================
-void List::add(Student A[], int n)
+void List::add(Student* A, int Q)
 {
 	if(Head == nullptr) // if the List is empty
 	{
-		Head = new Student[n];
-		for(int i = 0; i < n; i++)
+		Head = new Student[Q];
+		for(int i = 0; i < Q; i++)
 			Head[i] = A[i];
-		Numb_Of_Student = n;
+
+		Numb_Of_Student = Q;
 	}
 	else
 	{
-		reallocate(Head, Numb_Of_Student + n, Numb_Of_Student);
-		for(int i = 0; i < n; i++)
+		reallocate(Head, Numb_Of_Student + Q, Numb_Of_Student);
+		for(int i = 0; i < Q; i++)
 			Head[Numb_Of_Student + i] = A[i];
-		Numb_Of_Student += n;
+
+		Numb_Of_Student += Q;
 	}
 }
 void List::del_by_Id(string Id)
@@ -162,4 +164,3 @@ void reallocate(Student *&St, int new_memory_area, int old_memory_area)
 		St[i] = temp[i];
 	delete[] temp;
 }
-

@@ -7,6 +7,12 @@
 
 using namespace std;
 
+class Student;
+
+//=============================================================Functions declaration=============================================================
+void reallocate(Student *&St, int new_memory_area, int old_memory_area);
+
+//=============================================================Date class declaration=============================================================
 class Date
 {
 	int Day, Month, Year;
@@ -25,6 +31,7 @@ public:
 	int get_Year();
 };
 
+//=============================================================Student class declaration=============================================================
 class Student
 {
 private:
@@ -66,13 +73,14 @@ public:
 	float get_Calculus_Grade();
 	float get_Avg();
 };
+//=============================================================List class declaration=============================================================
 class List
 {
 	Student *Head;
 	int Numb_Of_Student;
 public:
 	List(): Head(nullptr), Numb_Of_Student(0) {}
-	void add(Student A[], int n);
+	void add(Student* A, int Q);
 	void del_by_Id(string Id);
 	void search_by_name(string Name);
 
@@ -82,7 +90,4 @@ public:
 	void save();
 	~List();
 };
-
-// other functions
-void reallocate(Student *&St, int new_memory_area, int old_memory_area);
 #endif
