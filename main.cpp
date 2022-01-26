@@ -3,6 +3,7 @@
 #include<string>
 #include<iomanip>
 #include<conio.h>
+#include<math.h>
 #include<stdlib.h>
 #include<ctime>
 #include<fstream>
@@ -17,6 +18,8 @@ void add_Student();
 void del_Student();
 void print_List();
 void init_program();
+void save_data();
+
 int main() {
 	init_program();
 	return 0;
@@ -49,7 +52,10 @@ void init_program()
 		cout << "\n";
 		system("pause");
 	}
+	//  file here
+	save_data();
 }
+
 void add_Student()
 {
 	int Q;
@@ -80,8 +86,8 @@ void add_Student()
 		time_t t = time(0); // get time now
 		tm* now = localtime(&t);
 		temp_Date.set_Day(now->tm_mday);
-		temp_Date.set_Month(now->tm_mon);
-		temp_Date.set_Year(now->tm_year);
+		temp_Date.set_Month(now->tm_mon + 1);
+		temp_Date.set_Year(now->tm_year + 1900);
 		Temp_St[i].set_Adding_Date(temp_Date);
 
 		cout << "=================================================================\n";
@@ -90,19 +96,22 @@ void add_Student()
 	L.add(Temp_St, Q);
 	delete[] Temp_St;
 }
-
+// Last name,First name,Gender,Id code,Birthday,Adding day,Linear Algebra grade,Calculus grade,Database grade,Average grade
 void read_file()
 {
 	fstream Student_Data_FileIn;
 	Student_Data_FileIn.open("student_data.csv", ios_base::in);
+	if(Student_Data_FileIn.fail())
+	{
+		cout << "student_data.cvs doesn't exist";
+		return;
+	}
 	
 	string line;
 	getline(Student_Data_FileIn, line);
 
 	int Q = stoi(line);
 	Student* Temp_St = new Student[Q];
-
-	getline(Student_Data_FileIn, line);
 	
 	for(int i = 0; i < Q; i++)
 	{
@@ -198,10 +207,50 @@ void read_file()
 		temp = line.substr(p1, p2 - p1);
 		Temp_St[i].set_DS_Grade(stof(temp));
 	}
-
 	L.add(Temp_St, Q);
 	delete[] Temp_St;
 	Student_Data_FileIn.close();
+}
+// Last name,First name,Gender,Id code,Birthday,Adding day,Linear Algebra grade,Calculus grade,Database grade,Average grade
+void save_data()
+{
+	ofstream Student_Data_FileOut;
+	Student_Data_FileOut.open("student_data.csv", ios_base::out);
+	
+	int Q = L.get_Numb_Of_Student();
+	Student_Data_FileOut << Q << ",,,,,,,,,\n";
+	
+	string temp = "";
+	for(int i = 0; i < Q; i++)
+	{
+		//First name and last name
+		temp += L.get_Head()[i].get_FirstName() + "," + L.get_Head()[i].get_LastName() + ",";
+		//Gender
+		temp.push_back(char(L.get_Head()[i].get_Gender() + '0')); temp += ",";
+		//Id code
+		temp += L.get_Head()[i].get_Id() + ",";
+		//Date of birth
+		temp += to_string(L.get_Head()[i].get_DateOfBirth().get_Day()) + "-";
+		temp += to_string(L.get_Head()[i].get_DateOfBirth().get_Month()) + "-";
+		temp += to_string(L.get_Head()[i].get_DateOfBirth().get_Year()) + ",";
+		//Adding day
+		temp += to_string(L.get_Head()[i].get_Adding_Date().get_Day()) + "-";
+		temp += to_string(L.get_Head()[i].get_Adding_Date().get_Month()) + "-";
+		temp += to_string(L.get_Head()[i].get_Adding_Date().get_Year()) + ",";
+		//LA grade
+		temp += to_string(L.get_Head()[i].get_LA_Grade()) + ",";
+		//Calculus grade
+		temp += to_string(L.get_Head()[i].get_Calculus_Grade()) + ",";
+		//DS grade
+		temp += to_string(L.get_Head()[i].get_DS_Grade()) + ",";
+		//Avg grade
+		temp += to_string(L.get_Head()[i].get_Avg());
+		Student_Data_FileOut << temp;
+		Student_Data_FileOut << "\n";
+
+		temp.clear();
+	}
+	Student_Data_FileOut.close();
 }
 
 void print_List()

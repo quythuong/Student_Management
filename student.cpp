@@ -82,7 +82,7 @@ Student::Student()
 	Linear_Algebra_Grade = -1;
 	DataStruct_Grade = -1;
 	Calculus_Grade = -1;
-	Avg_Grade = -1;
+	Avg_Grade = 0;
 }
 void Student::set_FirstName(string First_Name) { this->First_Name = First_Name; }
 void Student::set_LastName(string Last_Name) { this->Last_Name = Last_Name; }
@@ -102,6 +102,7 @@ Date Student::get_Adding_Date() { return Adding_Date; }
 float Student::get_LA_Grade() { return Linear_Algebra_Grade; }
 float Student::get_DS_Grade() { return DataStruct_Grade; }
 float Student::get_Calculus_Grade() { return Calculus_Grade; }
+float Student::get_Avg() { return Avg_Grade; }
 
 //=============================================================List class definition=============================================================
 void List::add(Student* A, int Q)
