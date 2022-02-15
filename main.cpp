@@ -45,7 +45,7 @@ void init_program()
 		else if(Choice == 1)
 			add_Student();
 		else if(Choice == 2)
-			break;
+			del_Student();
 		else if(Choice == 3)
 			print_List();
 		
@@ -191,21 +191,24 @@ void read_file()
 		while(line[p2] != ',')
 			p2++;
 		temp = line.substr(p1, p2 - p1);
-		Temp_St[i].set_LA_Grade(stof(temp));
+		float t = stof(temp);
+		Temp_St[i].set_LA_Grade(t);
 		// get Calculus_Grade
 		p1 = p2 + 1;
 		p2 = p1;
 		while(line[p2] != ',')
 			p2++;
 		temp = line.substr(p1, p2 - p1);
-		Temp_St[i].set_Calculus_Grade(stof(temp));
+		t = stof(temp);
+		Temp_St[i].set_Calculus_Grade(t);
 		// get DataStruct_Grade
 		p1 = p2 + 1;
 		p2 = p1;
 		while(line[p2] != ',')
 			p2++;
 		temp = line.substr(p1, p2 - p1);
-		Temp_St[i].set_DS_Grade(stof(temp));
+		t = stof(temp);
+		Temp_St[i].set_DS_Grade(t);
 	}
 	L.add(Temp_St, Q);
 	delete[] Temp_St;
@@ -253,6 +256,7 @@ void save_data()
 	Student_Data_FileOut.close();
 }
 
+
 void print_List()
 {	
 	int q = L.get_Numb_Of_Student();
@@ -277,4 +281,9 @@ void print_List()
 			cout << M << "/" << setw(3) << left << D << "|" << endl;
 	}
 }
-//void del_Student();
+void del_Student()
+{
+	string ID;
+	cout << "Type student's ID code: "; fflush(stdin); cin >> ID;
+	L.del_by_Id(ID);
+}

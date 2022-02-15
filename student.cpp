@@ -6,7 +6,6 @@
 
 using namespace std;
 
-
 //=============================================================Date class definition=============================================================
 
 Date::Date()
@@ -137,8 +136,9 @@ void List::del_by_Id(string Id)
 			{
 				for(int k = i; k < Numb_Of_Student - 1; k++)
 					Head[k] = Head[k + 1];
-				reallocate(Head, Numb_Of_Student - 1, Numb_Of_Student);
+				reallocate(Head, Numb_Of_Student, Numb_Of_Student);
 				Numb_Of_Student--;
+				break;
 			}
 		if(Numb_Of_Student == 0)
 			Head = nullptr;
@@ -161,7 +161,7 @@ void reallocate(Student *&St, int new_memory_area, int old_memory_area)
 	delete[] St;
 
 	St = new Student[new_memory_area];
-	for(int i = 0; i < old_memory_area; i++)
+	for(int i = 0; i < ((new_memory_area < old_memory_area)? new_memory_area : old_memory_area); i++)
 		St[i] = temp[i];
 	delete[] temp;
 }
