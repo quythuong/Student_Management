@@ -70,6 +70,13 @@ void Date::set_Year(int Year) { this->Year = Year; }
 int Date::get_Day() { return this->Day; }
 int Date::get_Month() { return this->Month; }
 int Date::get_Year() { return this->Year; }
+string Date::get_Date()
+{
+	string date = to_string(this->Year) + "/";
+	date += ((this->Month < 10)? "0":"") + to_string(this->Month)+ "/";
+	date += ((this->Day < 10)? "0":"") + to_string(this->Day);
+	return date;
+}
 //=============================================================Student class definition=============================================================
 Student::Student()
 {
@@ -136,7 +143,7 @@ void List::del_by_Id(string Id)
 			{
 				for(int k = i; k < Numb_Of_Student - 1; k++)
 					Head[k] = Head[k + 1];
-				reallocate(Head, Numb_Of_Student, Numb_Of_Student);
+				reallocate(Head, Numb_Of_Student - 1, Numb_Of_Student);
 				Numb_Of_Student--;
 				break;
 			}

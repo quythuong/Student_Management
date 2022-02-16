@@ -29,6 +29,7 @@ public:
 	int get_Day();
 	int get_Month();
 	int get_Year();
+	string get_Date();
 };
 
 //=============================================================Student class declaration=============================================================

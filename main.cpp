@@ -17,6 +17,7 @@ void read_file();
 void add_Student();
 void del_Student();
 void print_List();
+void detail_info();
 void init_program();
 void save_data();
 
@@ -37,6 +38,7 @@ void init_program()
 		cout <<"\n\n\t1. Adding students";
 		cout <<"\n\t2. Delete student";
 		cout <<"\n\t3. Print student list";
+		cout <<"\n\t4. See detail infomation";
 		cout <<"\n\t0. Close program";
 	
 		cout << "\n\nChoose: "; cin >> Choice;
@@ -48,6 +50,8 @@ void init_program()
 			del_Student();
 		else if(Choice == 3)
 			print_List();
+		else if(Choice == 4)
+			detail_info();
 		
 		cout << "\n";
 		system("pause");
@@ -261,29 +265,40 @@ void print_List()
 {	
 	int q = L.get_Numb_Of_Student();
 	cout << "\nNumber of students: " << q;
-	cout << "\n|" << setw(15) << left << "First name " << "|" << setw(10) << left << "Last name " << "|"
+	cout << "\n|" << setw(15) << left << "First name " << "|" << setw(10) << left << "Last name " << "|" << setw(10) << left << "ID" << "|"
 		<< setw(7) << left << "Gender " << "|" << setw(11) << left << "Birthday " << "|" << endl;
-	cout << "+" << "---------------" << "+" << "----------" << "+" << "-------" << "+" << "-----------" << "+" << endl;
+	cout << "+" << "---------------" << "+" << "----------" << "+" << "----------" << "+" << "-------" << "+" << "-----------" << "+" << endl;
 	for(int i = 0; i < q; i++)
 	{
-		cout << "|" << setw(15) << left << L.get_Head()[i].get_FirstName()<< "|" << setw(10) << left << L.get_Head()[i].get_LastName() << "|"
-			<< setw(7) << left << L.get_Head()[i].get_Gender() << "|" << L.get_Head()[i].get_DateOfBirth().get_Year() 
-			<< "/";
-		int M = L.get_Head()[i].get_DateOfBirth().get_Month(); 
-		int D = L.get_Head()[i].get_DateOfBirth().get_Day();
-		if(M < 10 && D < 10)
-			cout << 0 << M << "/" << 0 << setw(2) << left << D << "|" << endl;
-		else if(M >= 10 && D < 10)
-			cout << M << "/" << 0 << setw(2) << left << D << "|" << endl;
-		else if(M < 10 && D >= 10)
-			cout << 0 << M << "/" << setw(3) << left << D << "|" << endl;
-		else
-			cout << M << "/" << setw(3) << left << D << "|" << endl;
+		cout << "|" << setw(15) << left << L.get_Head()[i].get_FirstName()<< "|" << setw(10) << left << L.get_Head()[i].get_LastName() << "|" 
+			<< setw(10) << left << L.get_Head()[i].get_Id() << "|" << setw(7) << left << L.get_Head()[i].get_Gender() 
+			<< "|" << setw(11) << left << L.get_Head()[i].get_DateOfBirth().get_Date() << "|" << endl;
 	}
 }
 void del_Student()
 {
 	string ID;
-	cout << "Type student's ID code: "; fflush(stdin); cin >> ID;
+	cout << "Type student's ID code(to delete): "; fflush(stdin); cin >> ID;
 	L.del_by_Id(ID);
+}
+void detail_info()
+{
+	string ID;
+	cout << "Type student's ID code(to see details): "; fflush(stdin); cin >> ID;
+	// search
+	int Q = L.get_Numb_Of_Student();
+	for(int i = 0; i < Q; i++)
+		if(L.get_Head()[i].get_Id() == ID)
+		{
+			string t;
+			cout << "\n=================================================================\n";
+			cout << setw(15) << left << "ID: " << setw(20) << left << L.get_Head()[i].get_Id() << "Linear Algebra grade: " << L.get_Head()[i].get_LA_Grade() << endl;
+			cout << setw(15) << left << "First name: " << setw(20) << left << L.get_Head()[i].get_FirstName() << "Data Struct grade: " << L.get_Head()[i].get_DS_Grade() << endl;
+			cout << setw(15) << left << "Last name: " << setw(20) << left << L.get_Head()[i].get_LastName() << "Calculus grade: " << L.get_Head()[i].get_Calculus_Grade() << endl;
+			cout << setw(15) << "Gender: " << L.get_Head()[i].get_Gender() << endl;
+			cout << setw(15) << left << "Date of birth: " << setw(20) << left << L.get_Head()[i].get_DateOfBirth().get_Date() << "Average grade: " 
+				<< L.get_Head()[i].get_Avg() << endl;
+			cout << setw(15) << "Adding date: " << L.get_Head()[i].get_Adding_Date().get_Date() << endl;
+			break;
+		}
 }

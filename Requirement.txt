@@ -5,7 +5,11 @@
 - Sort
 - Statistic
 - Save
+- Edit information
 
-|First Name |
-+-----------+------------------------
-|			|                
+ID: 21110672					Linear Algebra grade: 7
+First name:	Tran Quy			Data Struct grade: 8
+Last Name: Thuong				Calculus grade: 6
+Gender: 0 						
+Date of Birth: 2003/01/08 		Average grade: 7
+Adding date: 
