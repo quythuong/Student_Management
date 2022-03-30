@@ -72,9 +72,9 @@ int Date::get_Month() { return this->Month; }
 int Date::get_Year() { return this->Year; }
 string Date::get_Date()
 {
-	string date = to_string(this->Year) + "/";
-	date += ((this->Month < 10)? "0":"") + to_string(this->Month)+ "/";
-	date += ((this->Day < 10)? "0":"") + to_string(this->Day);
+	string date = ((this->Day < 10)? "0" : "") + to_string(this->Day) + "/";
+	date += ((this->Month < 10)? "0" : "") + to_string(this->Month) + "/";
+	date += to_string(this->Year);
 	return date;
 }
 //=============================================================Student class definition=============================================================
@@ -88,8 +88,7 @@ Student::Student()
 	Linear_Algebra_Grade = -1;
 	DataStruct_Grade = -1;
 	Calculus_Grade = -1;
-	Avg_Grade = 0;
-}
+	Avg_Grade = 0; }
 void Student::set_FirstName(string First_Name) { this->First_Name = First_Name; }
 void Student::set_LastName(string Last_Name) { this->Last_Name = Last_Name; }
 void Student::set_Gender(bool Gender) { this->Gender = Gender; }
@@ -99,6 +98,12 @@ void Student::set_Adding_Date(Date Adding_Date) { this->Adding_Date = Adding_Dat
 void Student::set_LA_Grade(float Linear_Algebra_Grade) { this->Linear_Algebra_Grade = Linear_Algebra_Grade; }
 void Student::set_Calculus_Grade(float Calculus_Grade) { this->Calculus_Grade = Calculus_Grade; }
 void Student::set_DS_Grade(float DataStruct_Grade) { this->DataStruct_Grade = DataStruct_Grade; }
+void Student::set_Avg()
+{
+	float Avg = (this->Linear_Algebra_Grade + this->Calculus_Grade + this->DataStruct_Grade) / 3;
+	Avg = roundf(Avg * 100) / 100;
+	this->Avg_Grade = Avg;
+}
 string Student::get_FirstName() { return First_Name; }
 string Student::get_LastName() { return Last_Name; }
 bool Student::get_Gender() { return Gender; }

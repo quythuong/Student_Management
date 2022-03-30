@@ -62,6 +62,7 @@ public:
 	void set_LA_Grade(float Linear_Algebra_Grade);
 	void set_DS_Grade(float DataStruct_Grade);
 	void set_Calculus_Grade(float Calculus_Grade);
+	void set_Avg();
 
 	string get_FirstName();
 	string get_LastName();

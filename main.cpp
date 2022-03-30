@@ -16,8 +16,11 @@ List L;
 void read_file();
 void add_Student();
 void del_Student();
-void print_List();
+void print_List(Student* l);
 void detail_info();
+void sort_Student_byName();
+void sort_Student_byAvgGrade();
+void search_by_Name();
 void init_program();
 void save_data();
 
@@ -38,7 +41,9 @@ void init_program()
 		cout <<"\n\n\t1. Adding students";
 		cout <<"\n\t2. Delete student";
 		cout <<"\n\t3. Print student list";
-		cout <<"\n\t4. See detail infomation";
+		cout <<"\n\t4. See and edit detail infomation";
+		cout <<"\n\t5. Search by name";
+		cout <<"\n\t6. Sort";
 		cout <<"\n\t0. Close program";
 	
 		cout << "\n\nChoose: "; cin >> Choice;
@@ -49,10 +54,21 @@ void init_program()
 		else if(Choice == 2)
 			del_Student();
 		else if(Choice == 3)
-			print_List();
+			print_List(L.get_Head());
 		else if(Choice == 4)
 			detail_info();
-		
+		else if(Choice == 5)
+			search_by_Name();
+		else if(Choice == 6)
+		{
+			system("cls");
+			cout << "1. Sort by name" << "\t2. Sort by average grade";
+			cout << "\nChoose: "; cin >> Choice;
+			if(Choice == 1)
+				sort_Student_byName();
+			else if(Choice == 2)
+				sort_Student_byAvgGrade();
+		}
 		cout << "\n";
 		system("pause");
 	}
@@ -79,7 +95,7 @@ void add_Student()
 		int D, M, Y;
 		do
 		{
-			cout << "Date of Birth(separate with space): "; cin >> Y >> M >> D; 
+			cout << "Date of Birth(separated with space): "; cin >> Y >> M >> D; 
 			temp_Date.set_Day(D);
 			temp_Date.set_Month(M);
 			temp_Date.set_Year(Y);
@@ -213,6 +229,7 @@ void read_file()
 		temp = line.substr(p1, p2 - p1);
 		t = stof(temp);
 		Temp_St[i].set_DS_Grade(t);
+		Temp_St[i].set_Avg();
 	}
 	L.add(Temp_St, Q);
 	delete[] Temp_St;
@@ -260,19 +277,20 @@ void save_data()
 	Student_Data_FileOut.close();
 }
 
-
-void print_List()
+void print_List(Student* l)
 {	
 	int q = L.get_Numb_Of_Student();
 	cout << "\nNumber of students: " << q;
 	cout << "\n|" << setw(15) << left << "First name " << "|" << setw(10) << left << "Last name " << "|" << setw(10) << left << "ID" << "|"
-		<< setw(7) << left << "Gender " << "|" << setw(11) << left << "Birthday " << "|" << endl;
-	cout << "+" << "---------------" << "+" << "----------" << "+" << "----------" << "+" << "-------" << "+" << "-----------" << "+" << endl;
+		<< setw(7) << left << "Gender " << "|" << setw(11) << left << "Birthday " << "|" << setw(14) << left << "Linear Algebra" << "|" << setw(8) << left << "Calculus" << "|"
+		<< setw(11) << left << "Data Struct" << "|" << setw(10) << left << "Average" << "|" << endl;
+	cout << "+---------------+" << "----------+"  << "----------+" << "-------+"  << "-----------+" << "--------------+" << "--------+" << "-----------+" << "----------+" << endl;
 	for(int i = 0; i < q; i++)
 	{
-		cout << "|" << setw(15) << left << L.get_Head()[i].get_FirstName()<< "|" << setw(10) << left << L.get_Head()[i].get_LastName() << "|" 
-			<< setw(10) << left << L.get_Head()[i].get_Id() << "|" << setw(7) << left << L.get_Head()[i].get_Gender() 
-			<< "|" << setw(11) << left << L.get_Head()[i].get_DateOfBirth().get_Date() << "|" << endl;
+		cout << "|" << setw(15) << left << l[i].get_FirstName()<< "|" << setw(10) << left << l[i].get_LastName() << "|" 
+			<< setw(10) << left << l[i].get_Id() << "|" << setw(7) << left << l[i].get_Gender() 
+			<< "|" << setw(11) << left << l[i].get_DateOfBirth().get_Date() << "|" << setw(14) << left << l[i].get_LA_Grade() << "|" << setw(8) << left << l[i].get_Calculus_Grade() << "|"
+		<< setw(11) << left << l[i].get_DS_Grade() << "|" << setw(10) << left << l[i].get_Avg() << "|" << endl;
 	}
 }
 void del_Student()
@@ -284,6 +302,7 @@ void del_Student()
 void detail_info()
 {
 	string ID;
+	int Cur_Student_Pos;
 	cout << "Type student's ID code(to see details): "; fflush(stdin); cin >> ID;
 	// search
 	int Q = L.get_Numb_Of_Student();
@@ -292,13 +311,175 @@ void detail_info()
 		{
 			string t;
 			cout << "\n=================================================================\n";
-			cout << setw(15) << left << "ID: " << setw(20) << left << L.get_Head()[i].get_Id() << "Linear Algebra grade: " << L.get_Head()[i].get_LA_Grade() << endl;
-			cout << setw(15) << left << "First name: " << setw(20) << left << L.get_Head()[i].get_FirstName() << "Data Struct grade: " << L.get_Head()[i].get_DS_Grade() << endl;
-			cout << setw(15) << left << "Last name: " << setw(20) << left << L.get_Head()[i].get_LastName() << "Calculus grade: " << L.get_Head()[i].get_Calculus_Grade() << endl;
-			cout << setw(15) << "Gender: " << L.get_Head()[i].get_Gender() << endl;
-			cout << setw(15) << left << "Date of birth: " << setw(20) << left << L.get_Head()[i].get_DateOfBirth().get_Date() << "Average grade: " 
-				<< L.get_Head()[i].get_Avg() << endl;
-			cout << setw(15) << "Adding date: " << L.get_Head()[i].get_Adding_Date().get_Date() << endl;
+			cout << setw(18) << left << "1. ID: " << setw(20) << left << L.get_Head()[i].get_Id() 
+				<< "7. Linear Algebra grade: " << L.get_Head()[i].get_LA_Grade() << endl;
+			cout << setw(18) << left << "2. First name: " << setw(20) << left << L.get_Head()[i].get_FirstName() 
+				<< "8. Data Struct grade: " << L.get_Head()[i].get_DS_Grade() << endl;
+			cout << setw(18) << left << "3. Last name: " << setw(20) << left << L.get_Head()[i].get_LastName() 
+				<< "9. Calculus grade: " << L.get_Head()[i].get_Calculus_Grade() << endl;
+			cout << setw(18) << "4. Gender: " << L.get_Head()[i].get_Gender() << endl;
+			cout << setw(18) << left << "5. Date of birth: " << setw(20) << left << L.get_Head()[i].get_DateOfBirth().get_Date() 
+				<< "10. Average grade: " << L.get_Head()[i].get_Avg() << endl;
+			cout << setw(18) << "6. Adding date: " << L.get_Head()[i].get_Adding_Date().get_Date() << endl;
+			Cur_Student_Pos = i;
 			break;
 		}
+
+	if(Cur_Student_Pos == -1)
+		return;
+	//edit inf	
+
+	int Choice_Int;
+	cout << "\n\n1. Edit\t\t" << "2. Back";
+	cout << "\nChoose: "; cin >> Choice_Int;
+	if(Choice_Int == 1)
+	{
+		while(true)
+		{
+			cout << "\nChoose field(separated by space): "; cin >> Choice_Int;
+			switch(Choice_Int)
+			{
+				case 0:
+					return;
+					break;
+				case 1:
+					{
+						string ID;
+						cout << "\nType ID: "; fflush(stdin); getline(cin, ID);
+						L.get_Head()[Cur_Student_Pos].set_Id(ID);
+					}
+					break;
+				case 2:
+					{
+						string First_Name;
+						cout << "\nType first name: "; fflush(stdin); getline(cin, First_Name);
+						L.get_Head()[Cur_Student_Pos].set_FirstName(First_Name);
+					}
+					break;
+				case 3:
+					{
+						string Last_Name;
+						cout << "\nType last name: "; fflush(stdin); getline(cin, Last_Name);
+						L.get_Head()[Cur_Student_Pos].set_LastName(Last_Name);
+					}
+					break;
+				case 4:
+					{
+						string Gender;
+						cout << "\nType gender: "; fflush(stdin); getline(cin, Gender);
+						L.get_Head()[Cur_Student_Pos].set_Gender(((Gender == "male")? 1 : 0));
+					}
+					break;
+				case 5:
+					{
+						do
+						{
+							int Y, M, D;
+							cout << "\nType date of Birth(separated by space): "; cin >> Y >> M >> D;
+							L.get_Head()[Cur_Student_Pos].get_DateOfBirth().set_Year(Y);
+							L.get_Head()[Cur_Student_Pos].get_DateOfBirth().set_Month(M);
+							L.get_Head()[Cur_Student_Pos].get_DateOfBirth().set_Day(D);
+						} while(L.get_Head()->get_DateOfBirth().checkDate());
+					}
+					break;
+				case 7:
+					{
+						float LA_Grade;
+						cout << "\nType Linear Algebra grade"; cin >> LA_Grade;
+						L.get_Head()[Cur_Student_Pos].set_LA_Grade(LA_Grade);
+					}
+					break;
+				case 8:
+					{
+						float DS_Grade;
+						cout << "\nType Linear Algebra grade"; cin >> DS_Grade;
+						L.get_Head()[Cur_Student_Pos].set_DS_Grade(DS_Grade);
+					}
+					break;
+				case 9:
+					{
+						float Calculus_Grade;
+						cout << "\nType Linear Algebra grade"; cin >> Calculus_Grade;
+						L.get_Head()[Cur_Student_Pos].set_Calculus_Grade(Calculus_Grade);
+					}
+					break;
+				default:
+					return;
+					break;
+			}
+			cout << "\n=================================================================\n";
+			cout << setw(18) << left << "1. ID: " << setw(20) << left << L.get_Head()[Cur_Student_Pos].get_Id() 
+				<< "7. Linear Algebra grade: " << L.get_Head()[Cur_Student_Pos].get_LA_Grade() << endl;
+			cout << setw(18) << left << "2. First name: " << setw(20) << left << L.get_Head()[Cur_Student_Pos].get_FirstName() 
+				<< "8. Data Struct grade: " << L.get_Head()[Cur_Student_Pos].get_DS_Grade() << endl;
+			cout << setw(18) << left << "3. Last name: " << setw(20) << left << L.get_Head()[Cur_Student_Pos].get_LastName() 
+				<< "9. Calculus grade: " << L.get_Head()[Cur_Student_Pos].get_Calculus_Grade() << endl;
+			cout << setw(18) << "4. Gender: " << L.get_Head()[Cur_Student_Pos].get_Gender() << endl;
+			cout << setw(18) << left << "5. Date of birth: " << setw(20) << left << L.get_Head()[Cur_Student_Pos].get_DateOfBirth().get_Date() 
+				<< "10. Average grade: " << L.get_Head()[Cur_Student_Pos].get_Avg() << endl;
+			cout << setw(18) << "6. Adding date: " << L.get_Head()[Cur_Student_Pos].get_Adding_Date().get_Date() << endl;
+			cout << "\n0. Back\n";
+			system("pause");
+		}
+	}
+	else
+		return;
+}
+void search_by_Name()
+{
+	string Name;
+	cout << "Type student's last name: "; fflush(stdin); cin >> Name;
+	//string Full_Name;
+	int Q = L.get_Numb_Of_Student();
+
+	cout << "\n|" << setw(15) << left << "First name " << "|" << setw(10) << left << "Last name " << "|" << setw(10) << left << "ID" << "|"
+		<< setw(7) << left << "Gender " << "|" << setw(11) << left << "Birthday " << "|" << endl;
+	cout << "+" << "---------------" << "+" << "----------" << "+" << "----------" << "+" << "-------" << "+" << "-----------" << "+" << endl;
+	for(int i = 0; i < Q; i++)
+	{
+		if(L.get_Head()[i].get_FirstName().find(Name) != -1)
+		{
+			cout << "|" << setw(15) << left << L.get_Head()[i].get_FirstName()<< "|" << setw(10) << left << L.get_Head()[i].get_LastName() << "|" 
+				<< setw(10) << left << L.get_Head()[i].get_Id() << "|" << setw(7) << left << L.get_Head()[i].get_Gender() 
+				<< "|" << setw(11) << left << L.get_Head()[i].get_DateOfBirth().get_Date() << "|" << endl;
+			continue;
+		}
+		if(L.get_Head()[i].get_LastName().find(Name) != -1)
+		{
+			cout << "|" << setw(15) << left << L.get_Head()[i].get_FirstName()<< "|" << setw(10) << left << L.get_Head()[i].get_LastName() << "|" 
+				<< setw(10) << left << L.get_Head()[i].get_Id() << "|" << setw(7) << left << L.get_Head()[i].get_Gender() 
+				<< "|" << setw(11) << left << L.get_Head()[i].get_DateOfBirth().get_Date() << "|" << endl;
+			continue;
+		}
+	}
+}
+void sort_Student_byName()
+{	
+	int Q = L.get_Numb_Of_Student();
+	Student *Temp = new Student[Q];
+	// copy from Student list
+	for(int i = 0; i < Q; i++)
+		Temp[i] = L.get_Head()[i];
+
+	for(int i = 0; i < Q - 1; i++)
+		for(int k = i + 1; k < Q; k++)
+			if(Temp[i].get_LastName()[0] > Temp[k].get_LastName()[0])
+				swap(Temp[i], Temp[k]);
+	print_List(Temp);
+	delete[] Temp;
+}
+void sort_Student_byAvgGrade()
+{
+	int Q = L.get_Numb_Of_Student();
+	Student *Temp = new Student[Q];
+	// copy from Student list
+	for(int i = 0; i < Q; i++)
+		Temp[i] = L.get_Head()[i];
+
+	for(int i = 0; i < Q - 1; i++)
+		for(int k = i + 1; k < Q; k++)
+			if(Temp[i].get_Avg() < Temp[k].get_Avg())
+				swap(Temp[i], Temp[k]);
+	print_List(Temp);
+	delete[] Temp;
 }
