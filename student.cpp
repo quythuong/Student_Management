@@ -24,44 +24,13 @@ bool Date::is_LeapYear()
 }
 bool Date::checkDate()
 {
-	if(Day < 0 || Month < 0 || Year < 0)
-		return false;
-	if(Day > 31 || Month > 12)
-		return false;
-	switch(Month)
-	{
-		case 2:
-			if(is_LeapYear())
-			{
-				if(Day > 29)
-					return false;
-			}
-			else
-			{
-				if(Day > 28)
-					return false;
-			}
-			break;
-		case 4:
-			if(Day > 30)
-				return false;
-			break;
-		case 6:
-			if(Day > 30)
-				return false;
-			break;
-		case 9:
-			if(Day > 30)
-				return false;
-			break;
-		case 11:
-			if(Day > 30)
-				return false;
-			break;
-		default:
-			break;
-	}
-	return true;
+	int DaysInMonth[13] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+	if(Month == 2 && Day > 0 && Day <= DaysInMonth[Month] + is_LeapYear())
+		return true;
+	if(Day > 0 && Day <= DaysInMonth[Month])
+		return true;
+	return false;
 }
 void Date::set_Day(int Day) {this->Day = Day; }
 void Date::set_Month(int  Month) { this->Month = Month; }
